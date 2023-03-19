@@ -15,12 +15,12 @@ jobs:
     - name: Install dependencies   # Sets the name of the step
       run: |   # Runs a command-line script
         sudo apt-get update   # Updates the package list for the operating system
-        sudo apt-get install -y nginx   # Installs the nginx web server
+        sudo apt-get install -y apache2   # Installs the apache2 web server
 
-    - name: Copy files to nginx directory   # Sets the name of the step
+    - name: Copy files to apache2 directory   # Sets the name of the step
       run: |   # Runs a command-line script
-        sudo rm -rf /var/www/mjeyz.com/*   # Removes all files in the nginx default directory
-        sudo cp -r ./* /var/www/mjeyz.com/   # Copies all files in the current directory to the nginx default directory
+        sudo rm -rf /var/www/mjeyz.com/*   # Removes all files in your website's main directory
+        sudo cp -r ./* /var/www/mjeyz.com/   # Copies all files in the current directory to your website's directory
 
-    - name: Restart nginx   # Sets the name of the step
-      run: sudo systemctl restart nginx   # Restarts the nginx service on the VPS
+    - name: Restart apache   # Sets the name of the step
+      run: sudo systemctl restart apache2   # Restarts the apache2 service on the VPS
