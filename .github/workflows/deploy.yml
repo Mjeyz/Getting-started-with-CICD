@@ -1,0 +1,26 @@
+name: Deploy to VPS   # Sets the name of the GitHub action
+
+on:
+  push:              # Triggers the action when a push event occurs
+    branches: [ main ]   # Runs only when a push event occurs on the main branch
+
+jobs:
+  deploy:   # Sets the name of the job
+    runs-on: ubuntu-latest   # Sets the operating system for the job to run on
+
+    steps:   # Sets the steps for the job to take
+    - name: Checkout repository   # Sets the name of the step
+      uses: actions/checkout@v2   # Checks out the repository code to the runner's file system
+
+    - name: Install dependencies   # Sets the name of the step
+      run: |   # Runs a command-line script
+        sudo apt-get update   # Updates the package list for the operating system
+        sudo apt-get install -y nginx   # Installs the nginx web server
+
+    - name: Copy files to nginx directory   # Sets the name of the step
+      run: |   # Runs a command-line script
+        sudo rm -rf /var/www/mjeyz.com/*   # Removes all files in the nginx default directory
+        sudo cp -r ./* /var/www/mjeyz.com/   # Copies all files in the current directory to the nginx default directory
+
+    - name: Restart nginx   # Sets the name of the step
+      run: sudo systemctl restart nginx   # Restarts the nginx service on the VPS
