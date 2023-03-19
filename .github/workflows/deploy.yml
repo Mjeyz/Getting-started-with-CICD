@@ -19,8 +19,8 @@ jobs:
 
     - name: Copy files to apache2 directory   # Sets the name of the step
       run: |   # Runs a command-line script
-        sudo rm -rf /var/www/mjeyz.com/*   # Removes all files in your website's main directory
-        sudo cp -r ./* /var/www/mjeyz.com/   # Copies all files in the current directory to your website's directory
+        sudo rm -rf /var/www/html/*   # Removes all files in your website's main directory
+        sudo cp -r ./* /var/www/html/   # Copies all files in the current directory to your website's directory
 
     - name: Restart apache   # Sets the name of the step
       run: sudo systemctl restart apache2   # Restarts the apache2 service on the VPS
