@@ -1,26 +1,23 @@
-name: Deploy to VPS   # Sets the name of the GitHub action
+name: Deploy HTML/CSS website on Ubuntu VPS with Apache2
 
 on:
-  push:              # Triggers the action when a push event occurs
-    branches: [ main ]   # Runs only when a push event occurs on the main branch
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy:   # Sets the name of the job
-    runs-on: ubuntu-latest   # Sets the operating system for the job to run on
-
-    steps:   # Sets the steps for the job to take
-    - name: Checkout repository   # Sets the name of the step
-      uses: actions/checkout@v2   # Checks out the repository code to the runner's file system
-
-    - name: Install dependencies   # Sets the name of the step
-      run: |   # Runs a command-line script
-        sudo apt-get update   # Updates the package list for the operating system
-        sudo apt-get install -y apache2   # Installs the apache2 web server
-
-    - name: Copy files to apache2 directory   # Sets the name of the step
-      run: |   # Runs a command-line script
-        sudo rm -rf /var/www/html/*   # Removes all files in your website's main directory
-        sudo cp -r ./* /var/www/html/   # Copies all files in the current directory to your website's directory
-
-    - name: Restart apache   # Sets the name of the step
-      run: sudo systemctl restart apache2   # Restarts the apache2 service on the VPS
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install Apache2
+        run: sudo apt-get update && sudo apt-get install -y apache2
+      
+      - name: Copy website files to Apache2 web root
+        run: sudo cp -r ./* /var/www/html/
+        
+      - name: Restart Apache2
+        run: sudo service apache2 restart
